@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 import 'package:prosnap/core/consts/colours.dart';
 import 'package:prosnap/core/consts/fonts.dart';
+import 'package:prosnap/features/auth/controllers/auth_controller.dart';
 
 class ManageProfileScreen extends StatefulWidget {
   const ManageProfileScreen({super.key});
@@ -15,7 +18,7 @@ class _ManageProfileScreenState extends State<ManageProfileScreen> {
 
   Widget verticalSpace(double h) => SizedBox(height: h.h);
   Widget horizontalSpace(double w) => SizedBox(width: w.w);
-
+  final AuthController controller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +51,20 @@ class _ManageProfileScreenState extends State<ManageProfileScreen> {
                   ),
                   const Spacer(),
                   SizedBox(width: 18.w),
+                  Obx(
+                    () => FilledButton.icon(
+                      onPressed:
+                          controller.signUpisLoading.value
+                              ? null
+                              : () {
+                                controller.signOut();
+                              },
+                      label:
+                          controller.signUpisLoading.value
+                              ? CircularProgressIndicator()
+                              : Text("LogOut"),
+                    ),
+                  ),
                 ],
               ),
             ),

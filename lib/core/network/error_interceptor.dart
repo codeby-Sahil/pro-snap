@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:prosnap/core/global/globals.dart';
 import 'api_exception.dart';
 
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    logger.e(err);
     // 🔹 No Internet
     if (err.type == DioExceptionType.connectionError ||
         err.type == DioExceptionType.unknown) {

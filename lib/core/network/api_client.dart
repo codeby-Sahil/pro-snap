@@ -5,11 +5,10 @@ import 'error_interceptor.dart';
 
 class ApiClient {
   late final Dio dio;
-
   ApiClient() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "http://localhost:4000/api/v1",
+        baseUrl: "http://192.168.1.16:4000/api/v1",
         connectTimeout: const Duration(seconds: 200),
         receiveTimeout: const Duration(seconds: 200),
         headers: {"Content-Type": "application/json"},
@@ -20,6 +19,7 @@ class ApiClient {
       LoggerInterceptor(),
       AuthInterceptor(),
       ErrorInterceptor(),
+      LoggerInterceptor(),
     ]);
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:prosnap/core/consts/colours.dart';
 import 'package:prosnap/core/consts/fonts.dart';
+import 'package:prosnap/core/services/current_user.dart';
 import 'package:prosnap/features/manage_profile/views/manage_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
                 child: Text(
-                  "pro_user",
+                  CurrentUser().name,
                   style: TextStyle(
                     fontFamily: Fonts.bold,
                     fontSize: 20.sp,
@@ -70,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
 
                     /// Bio Section
                     Text(
-                      "Pro User",
+                      CurrentUser().name,
                       style: TextStyle(
                         fontFamily: Fonts.semiBold,
                         fontSize: 14.sp,
@@ -81,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                     verticalSpace(6),
 
                     Text(
-                      "Capturing minimal moments in silence.\nLuxury • Editorial • Black & White",
+                      CurrentUser().bio,
                       style: TextStyle(
                         fontFamily: Fonts.light,
                         fontSize: 13.sp,

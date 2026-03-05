@@ -1,17 +1,24 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:prosnap/core/consts/theme.dart';
 import 'package:prosnap/core/global/initial_bindings.dart';
-import 'package:prosnap/core/router/router.dart';
+import 'package:prosnap/core/router/getxroutes.dart' as GetRoutes;
 import 'package:prosnap/core/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:prosnap/core/services/current_user.dart';
+import 'package:prosnap/core/services/local_db.dart';
+import 'package:prosnap/core/services/tokens.dart';
 
-void main() {
-  runApp(MealsDB());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalDb().init();
+  await CurrentUser().init();
+  await Tokens.init();
+  runApp(ProSanp());
 }
 
-class MealsDB extends StatelessWidget {
-  const MealsDB({super.key});
+class ProSanp extends StatelessWidget {
+  const ProSanp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class MealsDB extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             initialRoute: Routes.splashScreen,
             initialBinding: InitialBindings(),
-            getPages: GetRoutes.routes,
+            getPages: GetRoutes.GetRoutes.routes,
           ),
     );
   }

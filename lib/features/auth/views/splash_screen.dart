@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:prosnap/core/consts/colours.dart';
 import 'package:prosnap/core/consts/fonts.dart';
-import 'package:prosnap/features/auth/views/login_screen.dart';
+import 'package:prosnap/features/auth/controllers/auth_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -31,8 +31,12 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.off(() => LoginScreen());
+    /// 🔥 SAFE WAY (IMPORTANT)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 3), () {
+        final authController = Get.find<AuthController>();
+        authController.handleAppOpen();
+      });
     });
   }
 
@@ -43,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Widget verticalSpace(double height) => SizedBox(height: height.h);
-  Widget horizontalSpace(double width) => SizedBox(width: width.w);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen>
             children: [
               verticalSpace(200),
 
-              /// App Name
               Text(
                 "PRO SNAP",
                 style: TextStyle(
@@ -70,7 +72,6 @@ class _SplashScreenState extends State<SplashScreen>
 
               verticalSpace(16),
 
-              /// Tagline
               Text(
                 "Capture Silence",
                 style: TextStyle(
@@ -83,7 +84,6 @@ class _SplashScreenState extends State<SplashScreen>
 
               const Spacer(),
 
-              /// Footer
               Text(
                 "© 2026 Pro Snap",
                 style: TextStyle(

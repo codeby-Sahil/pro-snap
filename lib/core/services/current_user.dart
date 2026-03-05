@@ -1,6 +1,7 @@
 import 'package:prosnap/core/global/globals.dart';
 import 'package:prosnap/core/services/local_db.dart';
 
+// 👉 This class manages the current logged-in user's data safely and globally.
 class CurrentUser {
   static final CurrentUser _instance = CurrentUser._internal();
   CurrentUser._internal();

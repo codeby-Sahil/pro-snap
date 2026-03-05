@@ -12,8 +12,10 @@ class Tokens {
 
   static Future<String?> get refreshToken async {
     if (_refreshToken != null) return _refreshToken;
+
     final storage = FlutterSecureStorage();
     _refreshToken = await storage.read(key: "refreshToken");
+
     return _refreshToken;
   }
 
@@ -25,43 +27,21 @@ class Tokens {
     _accessToken = accessToken;
     final storage = FlutterSecureStorage();
     await storage.write(key: "refreshToken", value: refreshToken);
+    await storage.write(key: "accessToken", value: accessToken); // 🔥 ADD THIS
   }
 
-  static clear() async {
+  static Future<void> init() async {
+    final storage = FlutterSecureStorage();
+    _refreshToken = await storage.read(key: "refreshToken");
+    _accessToken = await storage.read(key: "accessToken"); // 🔥 RESTORE
+  }
+
+  static Future<void> clear() async {
     _refreshToken = null;
     _accessToken = null;
+
     final storage = FlutterSecureStorage();
     await storage.delete(key: "refreshToken");
+    await storage.delete(key: "accessToken");
   }
 }
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// SINGLE TOKEN
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-// class Tokens {
-//   static String? _token;
-
-//   static Future<String?> get token async {
-//     if (_token != null) return _token;
-//     final storage = FlutterSecureStorage();
-//     _token = await storage.read(key: "refreshToken");
-//     return _token;
-//   }
-
-//   static save({
-//     required String accessToken,
-//     required String refreshToken,
-//   }) async {
-//     _token = refreshToken;
-
-//     final storage = FlutterSecureStorage();
-//     await storage.write(key: "refreshToken", value: refreshToken);
-//   }
-
-//   static clear() async {
-//     _token = null;
-//     final storage = FlutterSecureStorage();
-//     await storage.delete(key: "refreshToken");
-//   }
-// }
