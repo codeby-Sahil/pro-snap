@@ -12,7 +12,7 @@ import 'package:prosnap/core/services/tokens.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalDb().init();
-  await CurrentUser().init();
+  CurrentUser().init();
   await Tokens.init();
   runApp(ProSanp());
 }

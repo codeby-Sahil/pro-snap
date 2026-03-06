@@ -17,10 +17,11 @@ class AuthController extends GetxController {
     try {
       final refreshToken = await Tokens.refreshToken;
 
+      print("REFRESH TOKEN: $refreshToken"); // 👈 add this
+
       if (refreshToken == null) {
         Get.offAll(() => LoginScreen());
       } else {
-        refreshToken != null;
         await repository.refreshToken();
         await repository.getCurrentUsers();
 
@@ -31,10 +32,10 @@ class AuthController extends GetxController {
         }
       }
     } catch (e) {
+      print("HANDLE APP OPEN ERROR: $e"); // 👈 already there
       CurrentUser().delete();
       Tokens.clear();
       Get.offAll(() => LoginScreen());
-      print("HANDLE APP OPEN ERROR: $e");
     }
   }
 

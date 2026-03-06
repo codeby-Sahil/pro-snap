@@ -42,7 +42,7 @@ class HomeController extends GetxController {
       if (e is NoInternetException) {
         Get.snackbar("Error..!!", e.message);
       }
-      logger.e(e);
+      // logger.e(e);
     } finally {
       isPostsloading.value = false;
     }
@@ -66,7 +66,7 @@ class HomeController extends GetxController {
         Get.snackbar("No Internet!!", e.message);
       }
 
-      logger.e(e);
+      // logger.e(e);
     } finally {
       loadingNextPost = false;
     }

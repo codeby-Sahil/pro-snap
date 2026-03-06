@@ -20,6 +20,7 @@ class AuthRepository {
         "/auth/sign-up",
         data: payload,
       );
+
       final String accessToken = response.data['data']['accessToken'];
       final String refreshToken = response.data['data']['refreshToken'];
       final userDetails = response.data['data']['user'];
@@ -46,6 +47,7 @@ class AuthRepository {
         "/auth/sign-in",
         data: payload,
       );
+
       final String accessToken = response.data['data']['accessToken'];
       final String refreshToken = response.data['data']['refreshToken'];
       final userDetails = response.data['data']['user'];
@@ -62,13 +64,15 @@ class AuthRepository {
   refreshToken() async {
     try {
       final payload = {"refreshToken": await Tokens.refreshToken};
+
       final Response response = await apiClient.dio.post(
-        "/auth/refresh",
+        "/auth/refresh-token", // ✅ FIXED ROUTE
         data: payload,
       );
 
       final accessToken = response.data['data']['accessToken'];
       final refreshToken = response.data['data']['refreshToken'];
+
       await Tokens.save(accessToken: accessToken, refreshToken: refreshToken);
     } on DioException catch (e) {
       throw e.error as Exception;
@@ -78,6 +82,7 @@ class AuthRepository {
   getCurrentUsers() async {
     try {
       final Response response = await apiClient.dio.get("/auth/me");
+
       final user = response.data['data']['user'];
       await CurrentUser().save(user);
     } on DioException catch (e) {
@@ -106,6 +111,7 @@ class AuthRepository {
         "/registration/profile",
         data: payload,
       );
+
       final userDetails = response.data['data'];
       CurrentUser().save(userDetails);
     } on DioException catch (e) {
@@ -116,6 +122,7 @@ class AuthRepository {
   signOut() async {
     try {
       await apiClient.dio.get("/auth/sign-out");
+
       await Tokens.clear();
       await CurrentUser().delete();
     } on DioException catch (e) {
